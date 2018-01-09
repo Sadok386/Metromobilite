@@ -1,50 +1,57 @@
 import React from 'react';
-import Header from './Header';
-import Order from './Order';
-import Inventory from './Inventory';
-import sampleVeggies from '../sample-veggies';
+import Location from './Location';
 
-class App extends React.Component {
-  constructor() {
-    super();
 
-    this.addVeggie = this.addVeggie.bind(this);
-    this.loadSamples = this.loadSamples.bind(this);
 
-    this.state = {
-      veggies: {},
-      order: {}
-    };
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.getInnerRef = this.getInnerRef.bind(this);
+    this.getLocation = this.getLocation.bind(this);
+     this.state = {
+            user: {}
+        }
   }
 
-  addVeggie(veggie) {
-    // mise à jour du state
-    // on fait une copie de notre state
-    const veggies = {...this.state.veggies};
-    // ajout de notre nouveau veggie
-    const timestamp = Date.now();
-    veggies[`veggie-${timestamp}`] = veggie;
-    // mise à jour du state
-    this.setState({ veggies });
+  innerRef;
+  getInnerRef(ref) {
+    this.innerRef = ref;
   }
 
-  loadSamples() {
-    this.setState({
-      veggies: sampleVeggies
-    });
+
+  getLocation() {
+    this.innerRef && this.innerRef.getLocation();
   }
+   getUserById(lat, long){
+        fetch(`http://data.metromobilite.fr/api/linesNear/json?x=${lat}&y=${long}&dist=500&details=true`)
+        .then( (response) => {
+            return response.json()
+        })
+        .then( (json) => {
+            this.setState({
+                user: json
+            })
+        });
+    }
+
+    componentDidMount() {
+        this.getUserById(5.6608439, 45.206305);
+    }
+
+    
+
 
   render() {
-    return (
-      <div className="amap">
-        <div className="menu">
-          <Header tagline="Des bons legumes" />
-        </div>
-        <Order />
-        <Inventory addVeggie={this.addVeggie} loadSamples={this.loadSamples} />
-      </div>
-    )
+    console.log(this.state.user.id);
+
+    const { getInnerRef, getLocation } = this;
+    return (<div>
+      //L'erreur se trouve à la ligne 50 lorsque j'essaie d'afficher le contenu de mon json il passe bien par le consol.log
+      //mais pas par la div
+      <p>ID: {this.state.user}</p>
+      <Location ref={getInnerRef}/>
+      <button onClick={getLocation}>Get location</button>
+    </div>);
   }
 }
-
-export default App;
