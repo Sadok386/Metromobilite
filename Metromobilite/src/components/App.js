@@ -43,7 +43,8 @@ export default class App extends React.Component {
 
 
   render() {
-    console.log(this.state.user.id);
+    // this.state.user.id n'existe pas car il y a plusieurs 'users'
+    console.log(this.state.user);
 
     const { getInnerRef, getLocation } = this;
     return (<div>
