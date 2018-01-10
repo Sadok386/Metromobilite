@@ -49,7 +49,7 @@ export default class App extends React.Component {
     return (<div>
       //L'erreur se trouve à la ligne 50 lorsque j'essaie d'afficher le contenu de mon json il passe bien par le consol.log
       //mais pas par la div
-      <p>ID: {this.state.user}</p>
+      <p>ID: {this.state.user.toString()}</p>
       <Location ref={getInnerRef}/>
       <button onClick={getLocation}>Get location</button>
     </div>);
