@@ -39,17 +39,18 @@ export default class App extends React.Component {
         this.getUserById(5.6608439, 45.206305);
     }
 
-    
+
 
 
   render() {
-    console.log(this.state.user.id);
+    // this.state.user.id n'existe pas car il y a plusieurs 'users'
+    console.log(this.state.user);
 
     const { getInnerRef, getLocation } = this;
     return (<div>
-      //L'erreur se trouve à la ligne 50 lorsque j'essaie d'afficher le contenu de mon json il passe bien par le consol.log
-      //mais pas par la div
-      <p>ID: {this.state.user}</p>
+      {/*L'erreur se trouve à la ligne 50 lorsque j'essaie d'afficher le contenu de mon json il passe bien par le consol.log*/}
+      {/*mais pas par la div*/}
+      <p>ID: {this.state.user.toString()}</p>
       <Location ref={getInnerRef}/>
       <button onClick={getLocation}>Get location</button>
     </div>);
