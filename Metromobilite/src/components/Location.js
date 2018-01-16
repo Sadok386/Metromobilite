@@ -19,7 +19,7 @@ class Location extends React.Component {
         ? <div>Geolocation is not enabled.</div>
         : props.coords
           ? <div>
-            You are at <span className="coordinate">{props.coords.latitude}</span>, <span className="coordinate">{props.coords.longitude}</span>
+            You are at <span className="coordinateLat">{props.coords.latitude}</span>, <span className="coordinateLong">{props.coords.longitude}</span>
             {
               props.coords.altitude
                 ? <span>, approximately {props.coords.altitude} meters above sea level</span>

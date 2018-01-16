@@ -1,6 +1,6 @@
 import React from 'react';
 import Location from './Location';
-
+import queryString from 'query-string';
 
 
 export default class App extends React.Component {
@@ -10,7 +10,10 @@ export default class App extends React.Component {
     this.getInnerRef = this.getInnerRef.bind(this);
     this.getLocation = this.getLocation.bind(this);
      this.state = {
-            user: {}
+            users: [],
+        }
+      this.data = {
+            position: [],
         }
   }
 
@@ -28,9 +31,10 @@ export default class App extends React.Component {
         .then( (response) => {
             return response.json()
         })
-        .then( (json) => {
+        .then((json) => {
             this.setState({
-                user: json
+              
+                users:json,
             })
         });
     }
@@ -38,21 +42,34 @@ export default class App extends React.Component {
     componentDidMount() {
         this.getUserById(5.6608439, 45.206305);
     }
-
+ getHorraire(lines){
+        fetch(`http://data.metromobilite.fr/api/ficheHoraires/json?route=${lines}:{X}&time={Y}`)
+        .then( (response) => {
+            return response.json()
+        })
+        .then((json) => {
+            this.setState({
+              
+                users:json,
+            })
+        });
+    }
 
 
 
   render() {
     // this.state.user.id n'existe pas car il y a plusieurs 'users'
-    console.log(this.state.user);
-
-    const { getInnerRef, getLocation } = this;
+    console.log(this.data.position)
+    const { getInnerRef, getLocation, getUserById } = this;
     return (<div>
-      {/*L'erreur se trouve à la ligne 50 lorsque j'essaie d'afficher le contenu de mon json il passe bien par le consol.log*/}
-      {/*mais pas par la div*/}
-      <p>ID: {this.state.user.toString()}</p>
+    {
+      this.state.users.map((dynamicData,key)=>
+      <div>{dynamicData.id}:
+      {dynamicData.name}</div>
+      )
+    }
       <Location ref={getInnerRef}/>
-      <button onClick={getLocation}>Get location</button>
+      <button onClick={getUserById}>Trouver les arrets</button>
     </div>);
   }
 }
