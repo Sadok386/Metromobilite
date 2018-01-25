@@ -8,15 +8,14 @@ import {
 
 import './css/style.css';
 import App from './components/App';
-import StorePicker from './components/StorePicker';
 import NotFound from './components/NotFound';
 
 const Root = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={StorePicker} />
-        <Route path="/store/:storeId" component={App} />
+        <Route exact path="/" component={App} />
+        
 
          {/* La <Route> qui suit n'a pas de "path", donc elle va
          toujours matcher. Cela veut dire que NotFound va
