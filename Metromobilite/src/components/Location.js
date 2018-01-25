@@ -12,7 +12,6 @@ class Location extends React.Component {
   render() {
     const { props } = this;
 
-
     return !props.isGeolocationAvailable
       ? <div>Your browser does not support Geolocation.</div>
       : !props.isGeolocationEnabled
@@ -27,7 +26,6 @@ class Location extends React.Component {
             }.
           </div>
           : <div>Getting the location data&hellip;</div>;
-          console.log(props.coords.latitude);
   }
 }
 
